@@ -2574,8 +2574,6 @@ impl BackendDevice for CpuDevice {
 
     fn rand_uniform(&self, shape: &Shape, dtype: DType, min: f64, max: f64) -> Result<CpuStorage> {
         use rand::prelude::*;
-        // CEREBRUM PATCH: Use cerebrum-rand for f16/bf16 support
-        use cerebrum_rand::{Distribution, Uniform as CerebrumUniform};
 
         let elem_count = shape.elem_count();
         let mut rng = rand::rng();
@@ -2633,9 +2631,6 @@ impl BackendDevice for CpuDevice {
 
     fn rand_normal(&self, shape: &Shape, dtype: DType, mean: f64, std: f64) -> Result<CpuStorage> {
         use rand::prelude::*;
-        // CEREBRUM PATCH: Use cerebrum-rand for f16/bf16 support
-        use cerebrum_rand::{Distribution as CerebrumDistribution, Normal as CerebrumNormal};
-        use rand_distr::Distribution;  // For F8E4M3, F32, F64
 
         let elem_count = shape.elem_count();
         let mut rng = rand::rng();
@@ -2645,7 +2640,8 @@ impl BackendDevice for CpuDevice {
             }
             DType::BF16 => {
                 let mut data = Vec::with_capacity(elem_count);
-                let normal = CerebrumNormal::new(bf16::from_f64(mean), bf16::from_f64(std));
+                let normal = rand_distr::Normal::new(bf16::from_f64(mean), bf16::from_f64(std))
+                    .map_err(Error::wrap)?;
                 for _i in 0..elem_count {
                     data.push(normal.sample(&mut rng))
                 }
@@ -2653,7 +2649,8 @@ impl BackendDevice for CpuDevice {
             }
             DType::F16 => {
                 let mut data = Vec::with_capacity(elem_count);
-                let normal = CerebrumNormal::new(f16::from_f64(mean), f16::from_f64(std));
+                let normal = rand_distr::Normal::new(f16::from_f64(mean), f16::from_f64(std))
+                    .map_err(Error::wrap)?;
                 for _i in 0..elem_count {
                     data.push(normal.sample(&mut rng))
                 }

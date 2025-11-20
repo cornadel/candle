@@ -1,12 +1,12 @@
 [package]
 name = "candle-core"
-version.workspace = true
-edition.workspace = true
-description.workspace = true
-repository.workspace = true
-keywords.workspace = true
-categories.workspace = true
-license.workspace = true
+version = "0.6.0"
+edition = "2021"
+description = "Minimalist ML framework."
+repository = "https://github.com/huggingface/candle"
+keywords = ["blas", "tensor", "machine-learning"]
+categories = ["science"]
+license = "MIT OR Apache-2.0"
 readme = "README.md"
 
 [dependencies]
@@ -27,7 +27,8 @@ memmap2 = { workspace = true }
 num-traits = { workspace = true }
 num_cpus = { workspace = true }
 rand = { workspace = true }
-rand_distr = { workspace = true }
+rand_distr = { workspace = true }  # Needed for F8E4M3 and F32
+cerebrum-rand = { workspace = true }  # CEREBRUM: f16/bf16 RNG
 rayon = { workspace = true }
 safetensors = { workspace = true }
 thiserror = { workspace = true }

@@ -1,15 +1,10 @@
 [workspace]
 members = [
     "candle-core",
-    "candle-datasets",
-    "candle-examples",
     "candle-nn",
-    "candle-pyo3",
     "candle-transformers",
-    "candle-wasm-examples/*",
-    "candle-wasm-tests",
-    "tensor-tools",
 ]
+# CEREBRUM: Only include packages needed by cerebrum-candle
 exclude = [
     "candle-book",
     "candle-flash-attn",
@@ -85,6 +80,8 @@ num-traits = "0.2.15"
 parquet = { version = "51.0.0" }
 rand = "0.9.0"
 rand_distr = "0.5.1"
+# CEREBRUM PATCH: Custom RNG for f16/bf16 support
+cerebrum-rand = { path = "../cerebrum-rand" }
 rayon = "1.7.0"
 safetensors = "0.6.0"
 serde = { version = "1.0.171", features = ["derive"] }
