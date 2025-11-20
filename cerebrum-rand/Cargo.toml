@@ -1,0 +1,32 @@
+[package]
+name = "cerebrum-rand"
+version = "0.1.0"
+edition = "2021"
+authors = ["Cerebrum AI Team"]
+description = "Custom RNG distributions for f16/bf16 - Resolves Candle compatibility"
+license = "MIT"
+
+[dependencies]
+# Core RNG (compatible avec Candle 0.9 qui utilise rand 0.9)
+rand = "0.9"
+
+# Seeded RNG pour reproducibilité
+rand_chacha = "0.9"
+
+# Half precision types
+half = "2.3"
+
+# Pas de rand_distr ici ! On implémente nous-mêmes les distributions
+# pour f16/bf16 via conversion f32
+
+[dev-dependencies]
+approx = "0.5"  # Pour tester les distributions
+criterion = "0.5"  # Pour benchmarks production
+
+[features]
+default = []
+simd = []  # Enable SIMD optimizations (requires nightly)
+
+[[bench]]
+name = "distributions"
+harness = false

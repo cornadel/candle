@@ -3,6 +3,7 @@ members = [
     "candle-core",
     "candle-nn",
     "candle-transformers",
+    "cerebrum-rand",
 ]
 # CEREBRUM: Only include packages needed by cerebrum-candle
 exclude = [
@@ -81,7 +82,7 @@ parquet = { version = "51.0.0" }
 rand = "0.9.0"
 rand_distr = "0.5.1"
 # CEREBRUM PATCH: Custom RNG for f16/bf16 support
-cerebrum-rand = { path = "../cerebrum-rand" }
+cerebrum-rand = { path = "./cerebrum-rand" }
 rayon = "1.7.0"
 safetensors = "0.6.0"
 serde = { version = "1.0.171", features = ["derive"] }
